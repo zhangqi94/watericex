@@ -1,0 +1,96 @@
+################################################################################################################
+cd /home/zq/zqcodeml/watericeX_dp/vasp_inputs
+cat /home/zq/zqcode/potpaw_PBE.64/H/POTCAR /home/zq/zqcode/potpaw_PBE.64/O/POTCAR > POTCAR
+grep TIT POTCAR
+grep ZVAL POTCAR
+
+################################################################################################################
+
+
+source_dir="/home/zq/zqcodeml/watericeX_md/data_dpmd/ice10_n128_hp"
+target_dir="/home/zq/zqcodeml/watericeX_md/data_vasp/ice10_n128_hp"
+
+# 创建目标文件夹（如果不存在）
+mkdir -p "$target_dir"
+
+# 查找所有POSCAR文件
+files=$(find "$source_dir" -type f -name "POSCAR")
+
+# 打乱文件列表
+shuffled_files=$(echo "$files" | shuf)
+
+# 计数器
+counter=1
+
+# 复制文件并重命名
+echo "$shuffled_files" | while read file; do
+    # 生成新的文件夹名称
+    new_folder=$(printf "%06d" $counter)
+    # 创建新的文件夹
+    mkdir -p "$target_dir/$new_folder"
+    # 输出正在复制的文件
+    echo "复制文件: $file 到 $target_dir/$new_folder/POSCAR"
+    # 复制POSCAR文件并重命名
+    cp "$file" "$target_dir/$new_folder/POSCAR"
+    # 增加计数器
+    counter=$((counter + 1))
+done
+
+
+
+########################################################################################################
+## cp INCAR to each POSCAR folder
+
+target_dir="/home/zq/zqcodeml/watericeX_md/data_vasp/ice10_n128_hp"
+target_dir="/home/zq/zqcodeml/watericeX_md/data_vasp/ice10_n16_hp"
+target_dir="/home/zq/zqcodeml/watericeX_md/data_strus_from_ckpt"
+find "$target_dir" -type f -name "POSCAR" -exec sh -c 'cp /home/zq/zqcodeml/watericeX_md/inputs_vasp/SCAN/INCAR "$(dirname "{}")" && cp /home/zq/zqcodeml/watericeX_md/inputs_vasp/SCAN/POTCAR "$(dirname "{}")"' \;
+
+
+
+
+
+
+**** SCAN ****
+target_dir="/home/zq/zqcodeml/watericeX_mace/data_stru_vasp/SCAN"
+find "$target_dir" -type f -name "POSCAR" -exec sh -c 'cp /home/zq/zqcodeml/watericeX_md/inputs_vasp/SCAN/INCAR "$(dirname "{}")" && cp /home/zq/zqcodeml/watericeX_md/inputs_vasp/SCAN/POTCAR "$(dirname "{}")"' \;
+
+**** PBE ****
+target_dir="/home/zq/zqcodeml/watericeX_mace/data_stru_vasp/PBE"
+find "$target_dir" -type f -name "POSCAR" -exec sh -c 'cp /home/zq/zqcodeml/watericeX_md/inputs_vasp/PBE/INCAR "$(dirname "{}")" && cp /home/zq/zqcodeml/watericeX_md/inputs_vasp/PBE/POTCAR "$(dirname "{}")"' \;
+
+rsync -avz "/home/zq/zqcodeml/watericeX_mace/data_stru_vasp" "huairou:/home/users/zhangqi/zqcode/watericeX_vasp"
+
+########################################################################################################
+
+rsync -avz "/home/zq/zqcodeml/watericeX_md/data_vasp" "huairou:/home/users/zhangqi/zqcode/watericeX_vasp"
+rsync -avz "/home/zq/zqcodeml/watericeX_md/data_vasp/ice10_n16_hp" "huairou:/home/users/zhangqi/zqcode/watericeX_vasp/data_vasp"
+rsync -avz "/home/zq/zqcodeml/watericeX_md/data_vasp/ice10_n128_hp" "huairou:/home/users/zhangqi/zqcode/watericeX_vasp/data_vasp"
+rsync -avz "/home/zq/zqcodeml/watericeX_md/data_strus_from_ckpt" "huairou:/home/users/zhangqi/zqcode/watericeX_vasp/data_vasp"
+
+rsync -avz "t02:/home/zhangqi/t02code/watericeX_md/data" "/home/zq/zqcodeml/watericeX_md"
+
+########################################################################################################
+cd /home/zq/zqcodeml/watericeX_dp
+find . -type f -name '._*' -exec rm -v {} \;
+
+
+
+
+############
+create abacus input files
+target_dir="/home/zq/zqcodeml/watericeX_mace/data_stru_abacus/SCAN"
+find "$target_dir" -type f -name "STRU" -exec sh -c 'cp /home/zq/zqcodeml/watericeX_mace/inputs_abacus/SCAN/INPUT "$(dirname "{}")" ' \;
+
+target_dir="/home/zq/zqcodeml/watericeX_mace/data_stru_abacus/PBE"
+find "$target_dir" -type f -name "STRU" -exec sh -c 'cp /home/zq/zqcodeml/watericeX_mace/inputs_abacus/PBE/INPUT "$(dirname "{}")"' \;
+
+cd /home/zq/zqcodeml/watericeX_abacus
+chmod +x run_scan.sh
+chmod +x run_pbe.sh
+./run_scan.sh
+./run_pbe.sh
+
+rsync -avz "/home/zq/zqcodeml/watericeX_mace/data_stru_abacus" "t02:/home/zhangqi/t02code/watericeX_abacus"
+
+
