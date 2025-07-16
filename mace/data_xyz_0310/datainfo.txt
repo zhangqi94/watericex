@@ -1,0 +1,29 @@
+Folder: /home/users/zhangqi/zqcode/watericeX_vasp/data_vasp/ice08cubic_n16
+  Number of OUTCAR files: 2491
+  Total number of frames: 2491
+All data combined into /home/users/zhangqi/zqcode/watericeX_vasp/data_xyz_0310/watericeX.xyz
+Folder: /home/users/zhangqi/zqcode/watericeX_vasp/data_vasp/ice08cubic_n128
+  Number of OUTCAR files: 145
+  Total number of frames: 145
+All data combined into /home/users/zhangqi/zqcode/watericeX_vasp/data_xyz_0310/watericeX.xyz
+Folder: /home/users/zhangqi/zqcode/watericeX_vasp/data_vasp/ice10_n16
+  Number of OUTCAR files: 2186
+  Total number of frames: 2186
+All data combined into /home/users/zhangqi/zqcode/watericeX_vasp/data_xyz_0310/watericeX.xyz
+Folder: /home/users/zhangqi/zqcode/watericeX_vasp/data_vasp/ice10_n128
+  Number of OUTCAR files: 107
+  Total number of frames: 107
+All data combined into /home/users/zhangqi/zqcode/watericeX_vasp/data_xyz_0310/watericeX.xyz
+Folder: /home/users/zhangqi/zqcode/watericeX_vasp/data_vasp/ice10_n16_hp
+  Number of OUTCAR files: 775
+  Total number of frames: 775
+All data combined into /home/users/zhangqi/zqcode/watericeX_vasp/data_xyz_0310/watericeX.xyz
+Folder: /home/users/zhangqi/zqcode/watericeX_vasp/data_vasp/ice10_n128_hp
+  Number of OUTCAR files: 9
+  Total number of frames: 9
+All data combined into /home/users/zhangqi/zqcode/watericeX_vasp/data_xyz_0310/watericeX.xyz
+Folder: /home/users/zhangqi/zqcode/watericeX_vasp/data_vasp/data_strus_from_ckpt
+  Number of OUTCAR files: 3846
+  Total number of frames: 3846
+All data combined into /home/users/zhangqi/zqcode/watericeX_vasp/data_xyz_0310/watericeX.xyz
+Dataset split complete: 9081 frames in train, 478 frames in test
